@@ -52,6 +52,8 @@ if __name__ =="__main__":
     end_date = datetime.date(2024, 4, 7)
     interval_in_minutes = 15
     intervals_per_day = int(24 * (60/interval_in_minutes))
+    sorted_zones = list(data.keys())
+    sorted_zones.sort()
     for single_date in daterange(start_date, end_date):
         date_str = single_date.strftime("%Y-%m-%d")
         point_in_time = datetime.datetime.fromtimestamp(time.mktime(datetime.datetime.strptime(date_str, "%Y-%m-%d").timetuple()))
@@ -64,7 +66,7 @@ if __name__ =="__main__":
                 "PointInTime":point_in_time
             }
 
-            for zone in list(data.keys()).sort():
+            for zone in sorted_zones:
                 days_data = data[zone]["zone_historic_data"][date_str]
 
                 # keys: stripes, callForHeat,
