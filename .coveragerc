@@ -1,0 +1,27 @@
+[run]
+# Specify the source code directories to measure coverage for.
+# For PyTado, this is likely the main package directory.
+source = PyTado
+
+# If you have scripts or command-line utilities outside the main package,
+# you can also include them, e.g.: source = PyTado, scripts
+
+# Omit certain files or directories from coverage.
+omit =
+    tests/*
+    # Include any other files or directories you want to exclude here.
+
+[report]
+# Show missing lines of coverage in the report.
+show_missing = True
+
+# Exclude certain lines from coverage calculations. For instance, you might exclude:
+exclude_lines =
+    pragma: no cover
+    # Defensive code
+    if __name__ == .__main__.:
+    raise NotImplementedError
+
+[html]
+# Directory where the HTML coverage report will be generated.
+directory = coverage_html_report

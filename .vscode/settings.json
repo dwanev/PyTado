@@ -1,3 +1,23 @@
 {
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": true,
+    "cSpell.words": [
+        "Tado"
+    ],
+    "python.testing.pytestArgs": [
+        "."
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "files.insertFinalNewline": true,
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "python.terminal.shellIntegration.enabled": true,
+    "pylint.args": [
+        "--max-line-length=100"
+    ],
+    "pylint.interpreter": [
+        ".venv/bin/python"
+    ]
 }
