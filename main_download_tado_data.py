@@ -1,5 +1,6 @@
+import os
 import json
-from PyTado.interface import Tado
+import datetime
 from datetime import date, timedelta
 
 
@@ -8,9 +9,57 @@ def daterange(start_date, end_date):
         yield start_date + timedelta(n)
 
 
+def login():
+    import webbrowser  # only needed for direct web browser access
+
+    from PyTado.interface.interface import Tado
+
+    tado = Tado(token_file_path=os.path.expanduser("~/tado/refresh_token"))
+
+    status = tado.device_activation_status()
+
+    if status == "PENDING":
+        url = tado.device_verification_url()
+
+        webbrowser.open_new_tab(url)
+
+        tado.device_activation()
+
+        status = tado.device_activation_status()
+
+    if status == "COMPLETED":
+        print("Login successful")
+    else:
+        print(f"Login status is {status}")
+
+    return tado
+
+# https://community.tado.com/en-gb/discussion/14426/efficient-multiroom-scheduling
+
+
+def set_tado_reading(yyy_mm_dd_date, reading_in_m3):
+
+
+    pass
+
+
+
+
+
 if __name__ =="__main__":
-    t = Tado('dwanev@gmail.com', 'HettyCat123!')
-    temp_zone_info = t.get_zones()
+    tado = login()
+    temp_zone_info = tado.get_zones()
+
+    readings = tado.get_eiq_meter_readings()
+    print(readings)
+
+
+
+    # YYYY-MM-DD, reading is without decimals
+    date = datetime.datetime.now().strftime("%Y-%m-%d")
+    kwh = 0
+    tado.set_eiq_meter_readings(date = date, reading=m3)
+
 
     zone_info = {}
     for r in temp_zone_info:
@@ -28,7 +77,7 @@ if __name__ =="__main__":
         date_str = single_date.strftime("%Y-%m-%d")
 
         for zone in zone_info.keys():
-            r = t.get_historic(zone,date_str)
+            r = tado.get_historic(zone, date_str)
             print(date_str)
             if "zone_historic_data" not in zone_info[zone]:
                 zone_info[zone]["zone_historic_data"]={}
