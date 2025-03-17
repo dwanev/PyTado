@@ -55,12 +55,6 @@ if __name__ =="__main__":
 
 
 
-    # YYYY-MM-DD, reading is without decimals
-    date = datetime.datetime.now().strftime("%Y-%m-%d")
-    kwh = 0
-    tado.set_eiq_meter_readings(date = date, reading=m3)
-
-
     zone_info = {}
     for r in temp_zone_info:
         zone_info[r["id"]] = r
@@ -86,3 +80,13 @@ if __name__ =="__main__":
 
     with open ("./data_files/data.json", "w") as f:
         json.dump(zone_info, f, indent=2)
+
+
+
+    # update tado with reading
+    # - needs units converted from kWh to m3 (octopus download does do this)
+    # - needs cumulative values, that match tados cumulative values
+
+    # TODO
+
+    # todo use python-tado rather than a forked repo.
